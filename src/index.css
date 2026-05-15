@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 45 30% 95%;
+    --card: 0 0% 8%;
+    --card-foreground: 45 30% 95%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 45 30% 95%;
+    --primary: 45 60% 52%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 45 30% 90%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 45 60% 52%;
+    --accent-foreground: 0 0% 5%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 15%;
+    --ring: 45 60% 52%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    direction: rtl;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-obsidian-900 text-[#F5F0E8] font-cairo;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    @apply font-cairo font-bold;
+    line-height: 1.3;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #D4AF37;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C9A84C;
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-gold-gradient text-obsidian-900 font-bold font-cairo rounded-sm px-8 py-3 transition-all duration-300;
+    @apply hover:shadow-gold-lg hover:scale-105 active:scale-95;
+    background-size: 200% auto;
+    background-image: linear-gradient(135deg, #C9A84C 0%, #F0D060 50%, #C9A84C 100%);
+  }
+
+  .btn-gold:hover {
+    background-position: right center;
+  }
+
+  .btn-outline-gold {
+    @apply border border-gold-500 text-gold-500 font-cairo font-semibold rounded-sm px-6 py-2.5 transition-all duration-300;
+    @apply hover:bg-gold-500 hover:text-obsidian-900 hover:shadow-gold;
+  }
+
+  .glass-card {
+    background: rgba(26, 26, 26, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+  }
+
+  .gold-text {
+    background: linear-gradient(135deg, #C9A84C 0%, #F0D060 50%, #C9A84C 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-divider {
+    @apply w-16 h-0.5 mx-auto my-4;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  }
+
+  .luxury-input {
+    @apply w-full bg-obsidian-800 border border-obsidian-600 text-[#F5F0E8] rounded-sm px-4 py-3 font-cairo text-base;
+    @apply focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-all duration-200;
+    @apply placeholder:text-obsidian-400;
+  }
+
+  .luxury-select {
+    @apply w-full bg-obsidian-800 border border-obsidian-600 text-[#F5F0E8] rounded-sm px-4 py-3 font-cairo text-base;
+    @apply focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-all duration-200;
+    appearance: none;
+  }
+
+  .product-card {
+    @apply relative overflow-hidden rounded-sm transition-all duration-500;
+    @apply hover:shadow-luxury hover:-translate-y-1;
+    background: rgba(17, 17, 17, 0.9);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .product-card:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-center mb-2 font-cairo;
+    background: linear-gradient(135deg, #C9A84C 0%, #F0D060 50%, #C9A84C 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-link {
+    @apply text-cream-300 font-cairo font-medium transition-colors duration-200;
+    @apply hover:text-gold-500;
+  }
+
+  .size-btn {
+    @apply w-10 h-10 flex items-center justify-center border border-obsidian-600 text-cream-300 font-cairo text-sm rounded-sm transition-all duration-200 cursor-pointer;
+    @apply hover:border-gold-500 hover:text-gold-500;
+  }
+
+  .size-btn.active {
+    @apply border-gold-500 text-gold-500 bg-gold-500 bg-opacity-10;
+  }
+
+  .color-btn {
+    @apply w-8 h-8 rounded-full border-2 border-obsidian-600 cursor-pointer transition-all duration-200;
+    @apply hover:border-gold-500 hover:scale-110;
+  }
+
+  .color-btn.active {
+    @apply border-gold-500 scale-110;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+  }
+
+  .admin-sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 text-obsidian-300 font-cairo rounded-sm transition-all duration-200;
+    @apply hover:bg-obsidian-700 hover:text-gold-500;
+  }
+
+  .admin-sidebar-link.active {
+    @apply bg-gold-600 bg-opacity-20 text-gold-500 border-r-2 border-gold-500;
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  }
+
+  .shimmer-effect {
+    background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.1) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
