@@ -73,12 +73,12 @@ export default function OrderModal({ product, onClose }: OrderModalProps) {
     return encodeURIComponent(lines.join("\n"));
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!validate()) return;
     setSubmitting(true);
 
     // Save order
-    saveOrder({
+    await saveOrder({
       item: {
         productId: product.id,
         productName: product.name,

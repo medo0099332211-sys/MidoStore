@@ -5,7 +5,9 @@ import {
   Image, LayoutDashboard, ShoppingCart, Eye, AlertTriangle
 } from "lucide-react";
 import { Product, ColorOption } from "@/types";
-import { getProducts, addProduct, updateProduct, deleteProduct, adminLogout, isAdminLoggedIn, getOrders } from "@/lib/storage";
+import { addProduct, updateProduct, deleteProduct, adminLogout, isAdminLoggedIn } from "@/lib/storage";
+import { getDatabase, ref, onValue } from "firebase/database";
+import { initializeApp, getApps } from "firebase/app";
 import { formatPrice, generateId } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import ImageUpload from "@/components/features/ImageUpload";
@@ -65,7 +67,7 @@ export default function AdminDashboardPage() {
   const navigate = useNavigate();
   const [view, setView] = useState<AdminView>("overview");
   const [products, setProducts] = useState<Product[]>([]);
-  const [orders] = useState(() => getOrders());
+  const [orders, setOrders] = useState<any[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<ProductFormData>(EMPTY_FORM);
@@ -78,10 +80,24 @@ export default function AdminDashboardPage() {
       navigate("/admin");
       return;
     }
-    setProducts(getProducts());
+    // Subscribe to Firebase real-time updates
+    const apps = getApps();
+    if (apps.length > 0) {
+      const db = getDatabase(apps[0]);
+      const productsRef = ref(db, "products");
+      onValue(productsRef, (snapshot) => {
+        const data = snapshot.val();
+        setProducts(data ? Object.values(data) : []);
+      });
+      const ordersRef = ref(db, "orders");
+      onValue(ordersRef, (snapshot) => {
+        const data = snapshot.val();
+        setOrders(data ? Object.values(data) : []);
+      });
+    }
   }, [navigate]);
 
-  const refreshProducts = () => setProducts(getProducts());
+  const refreshProducts = () => {}; // Firebase real-time listener handles updates
 
   const handleLogout = () => {
     adminLogout();
@@ -135,7 +151,6 @@ export default function AdminDashboardPage() {
       addProduct(productData);
     }
 
-    refreshProducts();
     setShowForm(false);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 2500);
@@ -143,7 +158,6 @@ export default function AdminDashboardPage() {
 
   const handleDelete = (id: string) => {
     deleteProduct(id);
-    refreshProducts();
     setDeleteConfirm(null);
   };
 
